@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/AtlasGameTracker/">
+    <Project Path="../AtlasGameTrackerAgent/AtlasGameTrackerAgent.csproj" Id="dcbc3894-741f-4854-bf73-fbcf5a2790d0" />
+    <Project Path="../AtlasGameTrackerLibrary/AtlasGameTrackerLibrary.csproj" Id="59b3822a-33ba-41fb-8522-74cbe8a97a46" />
+    <Project Path="AtlasGameTrackerUI.csproj" />
+  </Folder>
+</Solution>
