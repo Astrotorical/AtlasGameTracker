@@ -69,7 +69,7 @@ namespace AtlasGameTrackerLibrary
             command.ExecuteNonQuery();
         }
 
-        public static void UnregisterApp(string processName)
+        public static void UnregisterApp(int registeredAppId)
         {
             using var connection = new SqliteConnection(_connectionString);
             connection.Open();
@@ -78,9 +78,9 @@ namespace AtlasGameTrackerLibrary
             command.CommandText = @"
                 UPDATE RegisteredApps
                 SET IsTracked = 0
-                WHERE ProcessName = $processName;
+                WHERE RegisteredAppId = $registeredAppId;
             ";
-            command.Parameters.AddWithValue("$processName", processName);
+            command.Parameters.AddWithValue("$registeredAppId", registeredAppId);
             command.ExecuteNonQuery();
         }
 
@@ -106,7 +106,7 @@ namespace AtlasGameTrackerLibrary
             return results;
         }
 
-        public static List<RegisteredApp> GetRegisteredApps()
+        public static List<RegisteredApp> GetAllRegisteredApps()
         {
             var results = new List<RegisteredApp>();
             using var connection = new SqliteConnection(_connectionString);
