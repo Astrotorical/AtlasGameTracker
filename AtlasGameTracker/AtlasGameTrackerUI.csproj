@@ -23,4 +23,8 @@
   <ItemGroup>
     <ProjectReference Include="..\AtlasGameTrackerLibrary\AtlasGameTrackerLibrary.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
 </Project>

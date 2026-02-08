@@ -10,43 +10,33 @@
 <UserControl.DataContext>
 	<vm:TrackedAppViewModel/>
 </UserControl.DataContext>
-<Grid Margin="10">
-	<Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" MinWidth="300"/>
-        <ColumnDefinition Width="*"/>
-    </Grid.ColumnDefinitions>
-
-    <StackPanel Grid.Column="0" Margin="0,0,10,0" Spacing="8">
-        <ListBox ItemsSource="{Binding RegisteredApps}"
-                 SelectedItem="{Binding SelectedApp, Mode=TwoWay}">
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="models:RegisteredApp">
-                    <StackPanel Orientation="Horizontal" Spacing="10">
-                        <TextBlock Text="{Binding DisplayName }" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </StackPanel>
-        <Border Grid.Column="1"
-                CornerRadius="6"
-                BorderBrush="Gray"
-                BorderThickness="1"
-                Padding="12">
-            <ContentControl Content="{Binding SelectedApp}">
-                <ContentControl.ContentTemplate>
-                    <DataTemplate DataType="models:RegisteredApp">
-                        <Grid RowDefinitions="Auto,Auto,Auto"
-                              ColumnDefinitions="80,*">
-                            <TextBlock Text="Name:" FontWeight="Bold"
-                                       Grid.Column="0"/>
-                            <TextBlock Text="{Binding DisplayName}"
-                                       Grid.Row="0" Grid.Column="1"
-                                       Margin="8,0,0,4"/>
-                        </Grid>
+    
+<SplitView IsPaneOpen="{Binding IsPanelOpen}"
+           OpenPaneLength="300"
+           CompactPaneLength="0"
+           DisplayMode="CompactInline">
+	<SplitView.Pane>
+        <StackPanel>
+            <TextBlock Text="Registered Applications" FontSize="18" Margin="10" Padding="5"/>
+            <ListBox ItemsSource="{Binding RegisteredApps}" SelectedItem="{Binding SelectedApp}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="models:RegisteredApp">
+                        <TextBlock Text="{Binding DisplayName}" FontSize="16" Margin="5"/>
                     </DataTemplate>
-                </ContentControl.ContentTemplate>
-            </ContentControl>
-        </Border>
-</Grid>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </SplitView.Pane>
+    <SplitView.Content>
+        <StackPanel>
+            <Button Command="{Binding TogglePanelCommand}">
+                -
+            </Button>
+            <StackPanel Margin="20">
+				<TextBlock Text="{Binding SelectedApp.DisplayName}" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+            </StackPanel>
+        </StackPanel>
+    </SplitView.Content>
+</SplitView>
+
 </UserControl>

@@ -1,6 +1,7 @@
 ﻿using AtlasGameTrackerLibrary;
 using AtlasGameTrackerLibrary.models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace AtlasGameTrackerUI.ViewModels
         private ObservableCollection<RegisteredApp> _registeredApps = new ObservableCollection<RegisteredApp>();
 
         private RegisteredApp? _selectedApp;
+        [ObservableProperty]
+        private bool _isPanelOpen;
         public RegisteredApp? SelectedApp
         {
             get => _selectedApp;
@@ -26,6 +29,7 @@ namespace AtlasGameTrackerUI.ViewModels
             {
                 SelectedApp = RegisteredApps.First();
             }
+            IsPanelOpen = true;
         }
 
         private void LoadRegisteredApps()
@@ -36,6 +40,12 @@ namespace AtlasGameTrackerUI.ViewModels
             {
                 RegisteredApps.Add(app);
             }
+        }
+
+        [RelayCommand]
+        private void TogglePanel()
+        {
+            IsPanelOpen = !IsPanelOpen;
         }
     }
 }

@@ -8,11 +8,11 @@
         x:Class="AtlasGameTrackerUI.MainWindow"
         Title="AtlasGameTracker">
     <Grid>
-        <TabControl>
+        <TabControl Padding="0">
             <TabItem Header="Overview" >
                 <views:OverviewView />
             </TabItem>
-            <TabItem Header="Tracked Applications">
+            <TabItem Header="Applications">
                 <views:TrackedAppView />
             </TabItem>
         </TabControl>
