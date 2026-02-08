@@ -2,22 +2,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="using:AtlasGameTrackerUI"
+        xmlns:vm="using:AtlasGameTrackerUI.ViewModel"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AtlasGameTrackerUI.MainWindow"
         Title="AtlasGameTracker">
     <Grid>
         <TabControl>
-            <TabItem Header="Home">
-                <StackPanel Margin="10" Spacing="8">
-
-                <TextBlock Text="Welcome to the Home tab."
-                         FontWeight="Bold"
-                         FontSize="16"/>
-
-                </StackPanel>
+            <TabItem Header="Overview" >
+                <views:OverviewView />
             </TabItem>
-            <TabItem Header="Settings">
+            <TabItem Header="Tracked Applications">
+                <views:TrackedAppView />
             </TabItem>
         </TabControl>
+        <TextPresenter VerticalAlignment="Bottom" 
+                       HorizontalAlignment="Right"
+                       FontSize="14"
+                       Opacity="0.3">v0.0.1
+        </TextPresenter>
     </Grid>
 </Window>
