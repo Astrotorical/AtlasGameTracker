@@ -2,11 +2,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="using:AtlasGameTrackerLibrary.models"
+             xmlns:vm="using:AtlasGameTrackerUI.ViewModels"
+             x:DataType="vm:TrackedAppViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AtlasGameTrackerUI.TrackedAppView">
-<StackPanel Margin="10" Spacing="8">
-<TextBlock Text="Welcome to the TrackedApp tab."
-           FontWeight="Bold"
-           FontSize="16"/>
-</StackPanel>
+<UserControl.DataContext>
+	<vm:TrackedAppViewModel/>
+</UserControl.DataContext>
+<Grid Margin="10">
+	<Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" MinWidth="300"/>
+        <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <StackPanel Grid.Column="0" Margin="0,0,10,0" Spacing="8">
+        <ListBox ItemsSource="{Binding RegisteredApps}"
+                 SelectedItem="{Binding SelectedApp, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="models:RegisteredApp">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="{Binding DisplayName }" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+        <Border Grid.Column="1"
+                CornerRadius="6"
+                BorderBrush="Gray"
+                BorderThickness="1"
+                Padding="12">
+            <ContentControl Content="{Binding SelectedApp}">
+                <ContentControl.ContentTemplate>
+                    <DataTemplate DataType="models:RegisteredApp">
+                        <Grid RowDefinitions="Auto,Auto,Auto"
+                              ColumnDefinitions="80,*">
+                            <TextBlock Text="Name:" FontWeight="Bold"
+                                       Grid.Column="0"/>
+                            <TextBlock Text="{Binding DisplayName}"
+                                       Grid.Row="0" Grid.Column="1"
+                                       Margin="8,0,0,4"/>
+                        </Grid>
+                    </DataTemplate>
+                </ContentControl.ContentTemplate>
+            </ContentControl>
+        </Border>
+</Grid>
 </UserControl>

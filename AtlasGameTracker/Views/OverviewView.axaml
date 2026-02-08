@@ -6,7 +6,6 @@
              x:Class="AtlasGameTrackerUI.OverviewView">
 <StackPanel Margin="10" Spacing="8">
 <TextBlock Text="Welcome to the Overview tab."
-           FontWeight="Bold"
-           FontSize="16"/>
+           FontWeight="Bold" />
 </StackPanel>
 </UserControl>
