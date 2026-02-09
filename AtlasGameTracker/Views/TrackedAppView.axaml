@@ -34,6 +34,10 @@
             </Button>
             <StackPanel Margin="20">
 				<TextBlock Text="{Binding SelectedApp.DisplayName}" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+                <TextBlock Text="Application Process Name:" FontSize="18" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding SelectedApp.ProcessName}" FontSize="16" Margin="0,0,0,10"/>
+                <TextBlock Text="Toggle Tracking:" FontSize="18" FontWeight="SemiBold"/>
+                <ToggleSwitch IsChecked="{Binding IsTrackingEnabled}" Command="{Binding ToggleTrackingCommand}" FontSize="16"/>
             </StackPanel>
         </StackPanel>
     </SplitView.Content>

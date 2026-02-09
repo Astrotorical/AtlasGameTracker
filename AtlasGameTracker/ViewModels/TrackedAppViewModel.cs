@@ -16,6 +16,8 @@ namespace AtlasGameTrackerUI.ViewModels
         private RegisteredApp? _selectedApp;
         [ObservableProperty]
         private bool _isPanelOpen;
+        [ObservableProperty]
+        private bool _isTrackingEnabled;
         public RegisteredApp? SelectedApp
         {
             get => _selectedApp;
@@ -28,6 +30,10 @@ namespace AtlasGameTrackerUI.ViewModels
             if (RegisteredApps.Count > 0)
             {
                 SelectedApp = RegisteredApps.First();
+                if (SelectedApp != null)
+                {
+                    IsTrackingEnabled = SelectedApp.IsTracked;
+                }
             }
             IsPanelOpen = true;
         }
@@ -39,6 +45,23 @@ namespace AtlasGameTrackerUI.ViewModels
             foreach (var app in apps)
             {
                 RegisteredApps.Add(app);
+            }
+        }
+
+        [RelayCommand]
+        private void ToggleTracking()
+        {
+            if (SelectedApp != null)
+            {
+                if (!SelectedApp.IsTracked)
+                {
+                    DBUtil.ReregisterApp(SelectedApp.RegisteredAppId);
+                }
+                else
+                {
+                    DBUtil.UnregisterApp(SelectedApp.RegisteredAppId);
+                }
+                SelectedApp.IsTracked = !SelectedApp.IsTracked;
             }
         }
 

@@ -84,6 +84,21 @@ namespace AtlasGameTrackerLibrary
             command.ExecuteNonQuery();
         }
 
+        public static void ReregisterApp(int registeredAppId)
+        {
+            using var connection = new SqliteConnection(_connectionString);
+            connection.Open();
+            using var command = connection.CreateCommand();
+
+            command.CommandText = @"
+                UPDATE RegisteredApps
+                SET IsTracked = 1
+                WHERE RegisteredAppId = $registeredAppId;
+            ";
+            command.Parameters.AddWithValue("$registeredAppId", registeredAppId);
+            command.ExecuteNonQuery();
+        }
+
         public static List<RegisteredApp> GetTrackedRegisteredApps()
         {
             var results = new List<RegisteredApp>();
