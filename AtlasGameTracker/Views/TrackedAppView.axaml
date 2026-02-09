@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="using:AtlasGameTrackerLibrary.models"
+             xmlns:views="using:AtlasGameTrackerUI"
              xmlns:vm="using:AtlasGameTrackerUI.ViewModels"
              x:DataType="vm:TrackedAppViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -38,6 +39,17 @@
                 <TextBlock Text="{Binding SelectedApp.ProcessName}" FontSize="16" Margin="0,0,0,10"/>
                 <TextBlock Text="Toggle Tracking:" FontSize="18" FontWeight="SemiBold"/>
                 <ToggleSwitch IsChecked="{Binding IsTrackingEnabled}" Command="{Binding ToggleTrackingCommand}" FontSize="16"/>
+                <TextBlock Text="Sessions:" FontSize="18" FontWeight="SemiBold"/>
+                <ListBox ItemsSource="{Binding SelectedApp.Snapshots}" MaxHeight="250">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:Snapshot">
+                            <StackPanel Orientation="Horizontal" Spacing="10"> 
+                                <TextBlock Text="{Binding StartTime}" Margin="5"/>
+                                <TextBlock Text="{Binding EndTime}" Margin="5"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
         </StackPanel>
     </SplitView.Content>

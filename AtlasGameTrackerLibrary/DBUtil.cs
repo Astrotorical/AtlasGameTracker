@@ -138,6 +138,7 @@ namespace AtlasGameTrackerLibrary
                     DisplayName = reader.IsDBNull(2) ? null : reader.GetString(2),
                     IsTracked = reader.GetInt32(3) != 0
                 };
+                app.Snapshots = GetSnapshotsForApp(app.RegisteredAppId);
                 results.Add(app);
             }
             return results;
@@ -176,6 +177,34 @@ namespace AtlasGameTrackerLibrary
             command.Parameters.AddWithValue("$endTime", (object?)snapshot.EndTime ?? DBNull.Value);
             command.Parameters.AddWithValue("$snapshotId", snapshot.SnapshotId);
             command.ExecuteNonQuery();
+        }
+
+        public static List<Snapshot> GetSnapshotsForApp(int registeredAppId)
+        {
+            var results = new List<Snapshot>();
+            using var connection = new SqliteConnection(_connectionString);
+            connection.Open();
+            using var command = connection.CreateCommand();
+            command.CommandText = @"
+                SELECT SnapshotId, RegisteredAppId, PollTime, StartTime, EndTime
+                FROM Snapshots
+                WHERE RegisteredAppId = $registeredAppId
+                ORDER BY PollTime DESC;";
+            command.Parameters.AddWithValue("$registeredAppId", registeredAppId);
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var snapshot = new Snapshot
+                {
+                    SnapshotId = reader.GetInt32(0),
+                    RegisteredAppId = reader.GetInt32(1),
+                    PollTime = reader.GetDateTime(2),
+                    StartTime = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
+                    EndTime = reader.IsDBNull(4) ? null : reader.GetDateTime(4)
+                };
+                results.Add(snapshot);
+            }
+            return results;
         }
 
         public static void DeleteSnapshot(int snapShotId)
