@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="using:AtlasGameTrackerLibrary.models"
+             xmlns:svg="using:Svg"
              xmlns:vm="using:AtlasGameTrackerUI.ViewModels"
              x:DataType="vm:TrackedAppViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -30,7 +31,7 @@
     <SplitView.Content>
         <StackPanel>
             <Button Command="{Binding TogglePanelCommand}">
-                -
+                <Image Source="avares://AtlasGameTrackerUI/Assets/3lines.png" Width="24" Height="24"/>
             </Button>
             <StackPanel Margin="20">
 				<TextBlock Text="{Binding SelectedApp.DisplayName}" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
