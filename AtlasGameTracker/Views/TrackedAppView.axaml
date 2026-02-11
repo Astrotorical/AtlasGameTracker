@@ -18,7 +18,6 @@
            DisplayMode="CompactInline">
 	<SplitView.Pane>
         <StackPanel>
-            <!-- Updated header: label on left, + button on right on the same line -->
             <Grid Margin="10" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
