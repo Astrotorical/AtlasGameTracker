@@ -55,6 +55,17 @@ namespace AtlasGameTrackerLibrary
             }
         }
 
+        public static bool IsAppRegistered(string processName)
+        {
+            using var connection = new SqliteConnection(_connectionString);
+            connection.Open();
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT COUNT(1) FROM RegisteredApps WHERE ProcessName = $processName;";
+            command.Parameters.AddWithValue("$processName", processName);
+            long count = (long)command.ExecuteScalar()!;
+            return count > 0;
+        }
+
         public static void RegisterApp(string processName, string? displayName = null)
         {
             using var connection = new SqliteConnection(_connectionString);

@@ -1,5 +1,7 @@
 ﻿using AtlasGameTrackerLibrary;
 using AtlasGameTrackerLibrary.models;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AtlasGameTrackerUI.ViewModels
 {
@@ -28,7 +31,7 @@ namespace AtlasGameTrackerUI.ViewModels
             LoadRegisteredApps();
             if (RegisteredApps.Count > 0)
             {
-                SelectedApp = RegisteredApps.First();
+                SelectedApp = RegisteredApps.FirstOrDefault();
                 if (SelectedApp != null)
                 {
                     IsTrackingEnabled = SelectedApp.IsTracked;
@@ -86,6 +89,28 @@ namespace AtlasGameTrackerUI.ViewModels
         private void TogglePanel()
         {
             IsPanelOpen = !IsPanelOpen;
+        }
+
+        [RelayCommand]
+        private async Task AddRegisteredApp()
+        {
+            var lifetime = Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+            var mainWindow = lifetime?.MainWindow;
+
+            var dialog = new AddRegisteredAppView();
+            var selected = await dialog.ShowDialog<ProcessInfo?>(mainWindow);
+
+            if (selected != null)
+            {
+
+                // Register the selected process (use process name as default display name here)
+                DBUtil.RegisterApp(selected.ProcessName, selected.ProcessName);
+
+                // Refresh list and select the newly registered app
+                LoadRegisteredApps();
+                SelectedApp = RegisteredApps.FirstOrDefault(a => a.ProcessName == selected.ProcessName);
+                OnSelectedAppChanged();
+            }
         }
     }
 }

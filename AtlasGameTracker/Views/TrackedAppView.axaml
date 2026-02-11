@@ -25,6 +25,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0"
+                        Command="{Binding AddRegisteredAppCommand}"
                         Width="32" Height="32"
                         ToolTip.Tip="Add new registered application">
                     <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -55,7 +56,7 @@
                 <TextBlock Text="Toggle Tracking:" FontSize="18" FontWeight="SemiBold"/>
                 <ToggleSwitch IsChecked="{Binding IsTrackingEnabled}" Command="{Binding ToggleTrackingCommand}" FontSize="16"/>
                 <TextBlock Text="Sessions:" FontSize="18" FontWeight="SemiBold"/>
-                <ListBox ItemsSource="{Binding SelectedApp.Sessions}" MaxHeight="250">
+                <ListBox ItemsSource="{Binding SelectedApp.Sessions}" MaxHeight="250" MaxWidth="1000" HorizontalAlignment="Left">
                     <ListBox.ItemTemplate>
                         <DataTemplate x:DataType="models:Session">
                             <StackPanel Orientation="Horizontal" Spacing="10">

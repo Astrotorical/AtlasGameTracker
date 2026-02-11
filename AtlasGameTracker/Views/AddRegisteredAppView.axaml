@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:AtlasGameTrackerUI"
+        x:Class="AtlasGameTrackerUI.AddRegisteredAppView"
+        xmlns:models="using:AtlasGameTrackerLibrary.models"
+        xmlns:vm="using:AtlasGameTrackerUI.ViewModels"
+        x:DataType="vm:AddRegisteredAppViewModel"
+        Title="Add Registered Application"
+        Width="400" Height="360"
+        WindowStartupLocation="CenterOwner">
+  <StackPanel Margin="12" Spacing="8">
+    <TextBlock Text="Select a running application to register:" FontWeight="SemiBold" />
+    <ListBox ItemsSource="{Binding Options}" SelectedItem="{Binding SelectedProcess}" Height="220">
+      <ListBox.ItemTemplate>
+        <DataTemplate x:DataType="models:ProcessInfo">
+          <TextBlock Text="{Binding ProcessName}" Margin="4"/>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+      <Button Name="AddButton" Click="AddButton_Click">Add</Button>
+      <Button Name="CancelButton" Click="CancelButton_Click">Cancel</Button>
+    </StackPanel>
+  </StackPanel>
+</Window>
