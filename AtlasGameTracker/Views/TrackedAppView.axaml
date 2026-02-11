@@ -17,8 +17,14 @@
            CompactPaneLength="0"
            DisplayMode="CompactInline">
 	<SplitView.Pane>
-        <StackPanel>
-            <Grid Margin="10" VerticalAlignment="Center">
+        <!-- Use a Grid so the ListBox gets constrained and can show scrollbars -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Margin="10" VerticalAlignment="Center" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
@@ -30,17 +36,23 @@
                         ToolTip.Tip="Add new registered application">
                     <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
-                <TextBlock Grid.Column="1" Margin="0,0,25,0" Text="Registered Applications" FontWeight="SemiBold" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="1" Margin="0,0,20,0" Text="Registered Applications" FontWeight="SemiBold" VerticalAlignment="Center" />
             </Grid>
 
-            <ListBox ItemsSource="{Binding RegisteredApps}" SelectedItem="{Binding SelectedApp}" SelectionChanged="OnSelectedAppChanged">
+            <!-- Constrained row: ListBox will show a scrollbar when items exceed the visible height -->
+            <ListBox Grid.Row="1" 
+                     ItemsSource="{Binding RegisteredApps}"
+                     SelectedItem="{Binding SelectedApp}"
+                     SelectionChanged="OnSelectedAppChanged"
+                     VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="models:RegisteredApp">
                         <TextBlock Text="{Binding DisplayName}" FontSize="16" Margin="5"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </StackPanel>
+        </Grid>
     </SplitView.Pane>
     <SplitView.Content>
         <StackPanel>
