@@ -18,7 +18,21 @@
            DisplayMode="CompactInline">
 	<SplitView.Pane>
         <StackPanel>
-            <TextBlock Text="Registered Applications" FontSize="18" Margin="10" Padding="5"/>
+            <!-- Updated header: label on left, + button on right on the same line -->
+            <Grid Margin="10" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                        Width="32" Height="32"
+                        ToolTip.Tip="Add new registered application">
+                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+                <TextBlock Grid.Column="1" Margin="0,0,25,0" Text="Registered Applications" FontWeight="SemiBold" VerticalAlignment="Center" />
+            </Grid>
+
             <ListBox ItemsSource="{Binding RegisteredApps}" SelectedItem="{Binding SelectedApp}" SelectionChanged="OnSelectedAppChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="models:RegisteredApp">
@@ -30,8 +44,8 @@
     </SplitView.Pane>
     <SplitView.Content>
         <StackPanel>
-            <Button Command="{Binding TogglePanelCommand}">
-                <Image Source="avares://AtlasGameTrackerUI/Assets/3lines.png" Width="24" Height="24"/>
+            <Button Command="{Binding TogglePanelCommand}" ToolTip.Tip="Hide panel">
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/3lines.png" Width="24" Height="24"/>
             </Button>
             <StackPanel Margin="20" IsVisible="{Binding HasSelectedApp}">
 				<TextBlock Text="{Binding SelectedApp.DisplayName}" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
