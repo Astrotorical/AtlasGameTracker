@@ -19,7 +19,7 @@
 	<SplitView.Pane>
         <StackPanel>
             <TextBlock Text="Registered Applications" FontSize="18" Margin="10" Padding="5"/>
-            <ListBox ItemsSource="{Binding RegisteredApps}" SelectedItem="{Binding SelectedApp}">
+            <ListBox ItemsSource="{Binding RegisteredApps}" SelectedItem="{Binding SelectedApp}" SelectionChanged="OnSelectedAppChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="models:RegisteredApp">
                         <TextBlock Text="{Binding DisplayName}" FontSize="16" Margin="5"/>
@@ -33,24 +33,29 @@
             <Button Command="{Binding TogglePanelCommand}">
                 <Image Source="avares://AtlasGameTrackerUI/Assets/3lines.png" Width="24" Height="24"/>
             </Button>
-            <StackPanel Margin="20">
+            <StackPanel Margin="20" IsVisible="{Binding HasSelectedApp}">
 				<TextBlock Text="{Binding SelectedApp.DisplayName}" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
                 <TextBlock Text="Application Process Name:" FontSize="18" FontWeight="SemiBold"/>
                 <TextBlock Text="{Binding SelectedApp.ProcessName}" FontSize="16" Margin="0,0,0,10"/>
+                <TextBlock Text="Total Playtime:" FontSize="18" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding SelectedApp.TotalPlaytime, StringFormat='{} {0} hrs'}" FontSize="16" Margin="0,0,0,10"/>
                 <TextBlock Text="Toggle Tracking:" FontSize="18" FontWeight="SemiBold"/>
                 <ToggleSwitch IsChecked="{Binding IsTrackingEnabled}" Command="{Binding ToggleTrackingCommand}" FontSize="16"/>
                 <TextBlock Text="Sessions:" FontSize="18" FontWeight="SemiBold"/>
-                <ListBox ItemsSource="{Binding SelectedApp.Snapshots}" MaxHeight="250">
+                <ListBox ItemsSource="{Binding SelectedApp.Sessions}" MaxHeight="250">
                     <ListBox.ItemTemplate>
-                        <DataTemplate x:DataType="models:Snapshot">
-                            <StackPanel Orientation="Horizontal" Spacing="10"> 
-                                <TextBlock Text="{Binding StartTime}" Margin="5"/>
-                                <TextBlock Text="{Binding EndTime}" Margin="5"/>
+                        <DataTemplate x:DataType="models:Session">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBlock FontWeight="Bold" Text="{Binding SessionDuration, StringFormat='{} {0} hrs'}"/>
+                                <TextBlock Text="{Binding StartTime}"/>
+                                <TextBlock Text=" - "/>
+                                <TextBlock Text="{Binding EndTime}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
+            <TextBlock Text="No application selected." FontSize="18" FontStyle="Italic" Margin="20" IsVisible="{Binding !HasSelectedApp}"/>
         </StackPanel>
     </SplitView.Content>
 </SplitView>

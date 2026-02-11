@@ -38,9 +38,9 @@ namespace AtlasGameTrackerLibrary
                 cmd.ExecuteNonQuery();
             }
 
-            var createSnapshots = @"
-                CREATE TABLE IF NOT EXISTS Snapshots (
-                    SnapshotId INTEGER PRIMARY KEY AUTOINCREMENT,
+            var createSessions = @"
+                CREATE TABLE IF NOT EXISTS Sessions (
+                    SessionId INTEGER PRIMARY KEY AUTOINCREMENT,
                     RegisteredAppId INTEGER NOT NULL,
                     PollTime DATETIME NOT NULL,
                     StartTime DATETIME,
@@ -50,7 +50,7 @@ namespace AtlasGameTrackerLibrary
 
             using (var cmd = connection.CreateCommand())
             {
-                cmd.CommandText = createSnapshots;
+                cmd.CommandText = createSessions;
                 cmd.ExecuteNonQuery();
             }
         }
@@ -138,95 +138,95 @@ namespace AtlasGameTrackerLibrary
                     DisplayName = reader.IsDBNull(2) ? null : reader.GetString(2),
                     IsTracked = reader.GetInt32(3) != 0
                 };
-                app.Snapshots = GetSnapshotsForApp(app.RegisteredAppId);
+                app.Sessions = GetSessionsForApp(app.RegisteredAppId);
                 results.Add(app);
             }
             return results;
         }
 
-        public static void SaveSnapshot(Snapshot snapshot)
+        public static void SaveSession(Session Session)
         {
             using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
             command.CommandText = @"
-                INSERT INTO Snapshots (RegisteredAppId, PollTime, StartTime, EndTime)
+                INSERT INTO Sessions (RegisteredAppId, PollTime, StartTime, EndTime)
                 VALUES ($registeredAppId, $pollTime, $startTime, $endTime);";
-            command.Parameters.AddWithValue("$registeredAppId", snapshot.RegisteredAppId);
-            command.Parameters.AddWithValue("$pollTime", snapshot.PollTime);
-            command.Parameters.AddWithValue("$startTime", (object?)snapshot.StartTime ?? DBNull.Value);
-            command.Parameters.AddWithValue("$endTime", (object?)snapshot.EndTime ?? DBNull.Value);
+            command.Parameters.AddWithValue("$registeredAppId", Session.RegisteredAppId);
+            command.Parameters.AddWithValue("$pollTime", Session.PollTime);
+            command.Parameters.AddWithValue("$startTime", (object?)Session.StartTime ?? DBNull.Value);
+            command.Parameters.AddWithValue("$endTime", (object?)Session.EndTime ?? DBNull.Value);
             command.ExecuteNonQuery();
         }
 
-        public static void UpdateSnapshot(Snapshot snapshot)
+        public static void UpdateSession(Session Session)
         {
             using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
             command.CommandText = @"
-                UPDATE Snapshots
+                UPDATE Sessions
                 SET RegisteredAppId = $registeredAppId,
                     PollTime = $pollTime,
                     StartTime = $startTime,
                     EndTime = $endTime
-                WHERE SnapshotId = $snapshotId;";
-            command.Parameters.AddWithValue("$registeredAppId", snapshot.RegisteredAppId);
-            command.Parameters.AddWithValue("$pollTime", snapshot.PollTime);
-            command.Parameters.AddWithValue("$startTime", (object?)snapshot.StartTime ?? DBNull.Value);
-            command.Parameters.AddWithValue("$endTime", (object?)snapshot.EndTime ?? DBNull.Value);
-            command.Parameters.AddWithValue("$snapshotId", snapshot.SnapshotId);
+                WHERE SessionId = $SessionId;";
+            command.Parameters.AddWithValue("$registeredAppId", Session.RegisteredAppId);
+            command.Parameters.AddWithValue("$pollTime", Session.PollTime);
+            command.Parameters.AddWithValue("$startTime", (object?)Session.StartTime ?? DBNull.Value);
+            command.Parameters.AddWithValue("$endTime", (object?)Session.EndTime ?? DBNull.Value);
+            command.Parameters.AddWithValue("$SessionId", Session.SessionId);
             command.ExecuteNonQuery();
         }
 
-        public static List<Snapshot> GetSnapshotsForApp(int registeredAppId)
+        public static List<Session> GetSessionsForApp(int registeredAppId)
         {
-            var results = new List<Snapshot>();
+            var results = new List<Session>();
             using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
             command.CommandText = @"
-                SELECT SnapshotId, RegisteredAppId, PollTime, StartTime, EndTime
-                FROM Snapshots
+                SELECT SessionId, RegisteredAppId, PollTime, StartTime, EndTime
+                FROM Sessions
                 WHERE RegisteredAppId = $registeredAppId
                 ORDER BY PollTime DESC;";
             command.Parameters.AddWithValue("$registeredAppId", registeredAppId);
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                var snapshot = new Snapshot
+                var Session = new Session
                 {
-                    SnapshotId = reader.GetInt32(0),
+                    SessionId = reader.GetInt32(0),
                     RegisteredAppId = reader.GetInt32(1),
                     PollTime = reader.GetDateTime(2),
                     StartTime = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
                     EndTime = reader.IsDBNull(4) ? null : reader.GetDateTime(4)
                 };
-                results.Add(snapshot);
+                results.Add(Session);
             }
             return results;
         }
 
-        public static void DeleteSnapshot(int snapShotId)
+        public static void DeleteSession(int SessionId)
         {
             using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
             command.CommandText = @"
-                DELETE FROM Snapshots
-                WHERE SnapshotId = $snapshotId;";
-            command.Parameters.AddWithValue("$snapshotId", snapShotId);
+                DELETE FROM Sessions
+                WHERE SessionId = $SessionId;";
+            command.Parameters.AddWithValue("$SessionId", SessionId);
             command.ExecuteNonQuery();
         }
 
-        public static Snapshot? GetLatestSnapshot(int registeredAppId)
+        public static Session? GetLatestSession(int registeredAppId)
         {
             using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
             command.CommandText = @"
-                SELECT SnapshotId, RegisteredAppId, PollTime, StartTime, EndTime
-                FROM Snapshots
+                SELECT SessionId, RegisteredAppId, PollTime, StartTime, EndTime
+                FROM Sessions
                 WHERE RegisteredAppId = $registeredAppId
                 ORDER BY PollTime DESC
                 LIMIT 1;";
@@ -234,9 +234,9 @@ namespace AtlasGameTrackerLibrary
             using var reader = command.ExecuteReader();
             if (reader.Read())
             {
-                return new Snapshot
+                return new Session
                 {
-                    SnapshotId = reader.GetInt32(0),
+                    SessionId = reader.GetInt32(0),
                     RegisteredAppId = reader.GetInt32(1),
                     PollTime = reader.GetDateTime(2),
                     StartTime = reader.IsDBNull(3) ? null : reader.GetDateTime(3),

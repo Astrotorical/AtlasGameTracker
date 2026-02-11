@@ -1,3 +1,4 @@
+using AtlasGameTrackerLibrary;
 using Avalonia.Controls;
 
 namespace AtlasGameTrackerUI
@@ -6,6 +7,7 @@ namespace AtlasGameTrackerUI
     {
         public MainWindow()
         {
+            DBUtil.EnsureDatabaseExists();
             InitializeComponent();
         }
     }

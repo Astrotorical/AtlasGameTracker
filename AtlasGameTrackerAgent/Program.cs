@@ -17,7 +17,7 @@ internal class Program
 
             List<RegisteredApp> trackedRegisteredApps = DBUtil.GetTrackedRegisteredApps();
 
-            // Should only create snapshots for tracked registered apps
+            // Should only create Sessions for tracked registered apps
             List<RegisteredApp> matchedRegisteredApps = trackedRegisteredApps
                 .Where(registeredApp => apps.Any(app => app.ProcessName.Equals(registeredApp.ProcessName, StringComparison.OrdinalIgnoreCase)))
                 .ToList();
@@ -26,40 +26,40 @@ internal class Program
             {
                 try
                 {
-                    Snapshot newSnapshot = new Snapshot
+                    Session newSession = new Session
                     {
                         RegisteredAppId = app.RegisteredAppId,
                         PollTime = DateTime.Now,
                     };
-                    Snapshot? latestSnapshot = DBUtil.GetLatestSnapshot(app.RegisteredAppId);
+                    Session? latestSession = DBUtil.GetLatestSession(app.RegisteredAppId);
 
                     // New session detected
-                    if (latestSnapshot == null || latestSnapshot.EndTime != null)
+                    if (latestSession == null || latestSession.EndTime != null)
                     {
-                        newSnapshot.StartTime = DateTime.Now;
-                        DBUtil.SaveSnapshot(newSnapshot);
-                        Console.WriteLine($"[New session detected for {app.ProcessName}, saved new snapshot]");
+                        newSession.StartTime = DateTime.Now;
+                        DBUtil.SaveSession(newSession);
+                        Console.WriteLine($"[New session detected for {app.ProcessName}, saved new Session]");
                         continue;
                     }
 
                     // Ongoing or unclosed session
-                    if (latestSnapshot.EndTime == null)
+                    if (latestSession.EndTime == null)
                     {
                         // Session timeout, close previous session and start a new one. Otherwise, update the ongoing session.
-                        if ((newSnapshot.PollTime - latestSnapshot.PollTime).TotalMinutes > 1) // 1 minute timeout
+                        if ((newSession.PollTime - latestSession.PollTime).TotalMinutes > 1) // 1 minute timeout
                         {
-                            latestSnapshot.EndTime = latestSnapshot.PollTime;
-                            DBUtil.UpdateSnapshot(latestSnapshot);
-                            newSnapshot.StartTime = DateTime.Now;
-                            DBUtil.SaveSnapshot(newSnapshot);
-                            Console.WriteLine($"[Session timeout for {app.ProcessName}, closed previous snapshot and saved a new one]");
+                            latestSession.EndTime = latestSession.PollTime;
+                            DBUtil.UpdateSession(latestSession);
+                            newSession.StartTime = DateTime.Now;
+                            DBUtil.SaveSession(newSession);
+                            Console.WriteLine($"[Session timeout for {app.ProcessName}, closed previous Session and saved a new one]");
                             continue;
                         }
                         else
                         {
-                            newSnapshot.SnapshotId = latestSnapshot.SnapshotId;
-                            newSnapshot.StartTime = latestSnapshot.StartTime;
-                            DBUtil.UpdateSnapshot(newSnapshot);
+                            newSession.SessionId = latestSession.SessionId;
+                            newSession.StartTime = latestSession.StartTime;
+                            DBUtil.UpdateSession(newSession);
                             Console.WriteLine($"[Updated ongoing session for {app.ProcessName}]");
                             continue;
                         }

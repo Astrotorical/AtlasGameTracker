@@ -2,6 +2,8 @@
 using AtlasGameTrackerLibrary.models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -12,17 +14,14 @@ namespace AtlasGameTrackerUI.ViewModels
     {
         [ObservableProperty]
         private ObservableCollection<RegisteredApp> _registeredApps = new ObservableCollection<RegisteredApp>();
-
+        [ObservableProperty]
         private RegisteredApp? _selectedApp;
+        [ObservableProperty]
+        private bool _hasSelectedApp;
         [ObservableProperty]
         private bool _isPanelOpen;
         [ObservableProperty]
         private bool _isTrackingEnabled;
-        public RegisteredApp? SelectedApp
-        {
-            get => _selectedApp;
-            set => SetProperty(ref _selectedApp, value);
-        }
 
         public TrackedAppViewModel()
         {
@@ -38,11 +37,29 @@ namespace AtlasGameTrackerUI.ViewModels
             IsPanelOpen = true;
         }
 
+        // We kinda need to update the bool like this since the toggle button is bound to it,
+        // and we want it to reflect the state of the selected app
+        public void OnSelectedAppChanged()
+        {
+            if (SelectedApp != null)
+            {
+                IsTrackingEnabled = SelectedApp.IsTracked;
+                HasSelectedApp = true;
+            }
+            else
+            {
+                IsTrackingEnabled = false;
+                HasSelectedApp = false;
+            }
+        }
+
         private void LoadRegisteredApps()
         {
-            var apps = DBUtil.GetAllRegisteredApps();
+            List<RegisteredApp> apps = DBUtil.GetAllRegisteredApps()
+                .OrderBy(a => string.IsNullOrWhiteSpace(a.DisplayName) ? a.ProcessName : a.DisplayName, StringComparer.OrdinalIgnoreCase)
+                .ToList();
             RegisteredApps.Clear();
-            foreach (var app in apps)
+            foreach (RegisteredApp app in apps)
             {
                 RegisteredApps.Add(app);
             }
