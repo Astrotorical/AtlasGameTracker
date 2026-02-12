@@ -17,7 +17,6 @@
            CompactPaneLength="0"
            DisplayMode="CompactInline">
 	<SplitView.Pane>
-        <!-- Use a Grid so the ListBox gets constrained and can show scrollbars -->
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -38,8 +37,6 @@
                 </Button>
                 <TextBlock Grid.Column="1" Margin="0,0,20,0" Text="Registered Applications" FontWeight="SemiBold" VerticalAlignment="Center" />
             </Grid>
-
-            <!-- Constrained row: ListBox will show a scrollbar when items exceed the visible height -->
             <ListBox Grid.Row="1" 
                      ItemsSource="{Binding RegisteredApps}"
                      SelectedItem="{Binding SelectedApp}"
