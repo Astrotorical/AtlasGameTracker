@@ -12,7 +12,7 @@ public partial class AddRegisteredAppView : Window
         DataContext = new AddRegisteredAppViewModel();
     }
 
-    private void AddButton_Click(object? sender, RoutedEventArgs e)
+    private void AddButtonClick(object? sender, RoutedEventArgs e)
     {
         if (DataContext is AddRegisteredAppViewModel viewModel)
         {
@@ -24,7 +24,7 @@ public partial class AddRegisteredAppView : Window
         }
     }
 
-    private void CancelButton_Click(object? sender, RoutedEventArgs e)
+    private void CancelButtonClick(object? sender, RoutedEventArgs e)
     {
         Close(null);
     }

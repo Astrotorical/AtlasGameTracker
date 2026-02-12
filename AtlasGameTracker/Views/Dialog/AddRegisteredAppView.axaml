@@ -22,8 +22,8 @@
 		  <TextBox Text="{Binding DisplayName}" MaxLength="100" Margin="0,4"/>
       </StackPanel>
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
-      <Button Name="AddButton" Click="AddButton_Click">Add</Button>
-      <Button Name="CancelButton" Click="CancelButton_Click">Cancel</Button>
+      <Button Name="AddButton" Click="AddButtonClick">Add</Button>
+      <Button Name="CancelButton" Click="CancelButtonClick">Cancel</Button>
     </StackPanel>
   </StackPanel>
 </Window>
