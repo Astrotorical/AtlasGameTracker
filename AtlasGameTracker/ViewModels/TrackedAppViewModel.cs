@@ -56,6 +56,22 @@ namespace AtlasGameTrackerUI.ViewModels
             }
         }
 
+        //public void OnDisplayNameLostFocus()
+        //{
+        //    if (SelectedApp != null)
+        //    {
+        //        if (!String.IsNullOrEmpty(SelectedApp.DisplayName))
+        //        {
+        //            DBUtil.UpdateAppDisplayName(SelectedApp.RegisteredAppId, SelectedApp.DisplayName);
+        //            LoadRegisteredApps();
+        //        }
+        //        else
+        //        {
+        //            SelectedApp.DisplayName = SelectedApp.ProcessName;
+        //        }
+        //    }
+        //}
+
         private void LoadRegisteredApps()
         {
             List<RegisteredApp> apps = DBUtil.GetAllRegisteredApps()
@@ -102,11 +118,7 @@ namespace AtlasGameTrackerUI.ViewModels
 
             if (selected != null)
             {
-
-                // Register the selected process (use process name as default display name here)
-                DBUtil.RegisterApp(selected.ProcessName, selected.ProcessName);
-
-                // Refresh list and select the newly registered app
+                DBUtil.RegisterApp(selected.ProcessName, selected.DisplayName);
                 LoadRegisteredApps();
                 SelectedApp = RegisteredApps.FirstOrDefault(a => a.ProcessName == selected.ProcessName);
                 OnSelectedAppChanged();

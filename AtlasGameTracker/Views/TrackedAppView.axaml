@@ -34,7 +34,7 @@
                         Command="{Binding AddRegisteredAppCommand}"
                         Width="32" Height="32"
                         ToolTip.Tip="Add new registered application">
-                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="+" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center"/>
                 </Button>
                 <TextBlock Grid.Column="1" Margin="0,0,20,0" Text="Registered Applications" FontWeight="SemiBold" VerticalAlignment="Center" />
             </Grid>

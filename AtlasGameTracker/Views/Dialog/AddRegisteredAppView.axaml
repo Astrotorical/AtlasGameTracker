@@ -6,18 +6,21 @@
         xmlns:vm="using:AtlasGameTrackerUI.ViewModels"
         x:DataType="vm:AddRegisteredAppViewModel"
         Title="Add Registered Application"
-        Width="400" Height="360"
+        Width="400" Height="400"
         WindowStartupLocation="CenterOwner">
   <StackPanel Margin="12" Spacing="8">
     <TextBlock Text="Select a running application to register:" FontWeight="SemiBold" />
-    <ListBox ItemsSource="{Binding Options}" SelectedItem="{Binding SelectedProcess}" Height="220">
+    <ListBox ItemsSource="{Binding Options}" SelectedItem="{Binding SelectedProcess}" SelectionChanged="OnSelectionChanged" Height="220">
       <ListBox.ItemTemplate>
         <DataTemplate x:DataType="models:ProcessInfo">
           <TextBlock Text="{Binding ProcessName}" Margin="4"/>
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>
-
+      <StackPanel>
+          <TextBlock Text="Custom Display Name:" Margin="0,4"/>
+		  <TextBox Text="{Binding DisplayName}" MaxLength="100" Margin="0,4"/>
+      </StackPanel>
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
       <Button Name="AddButton" Click="AddButton_Click">Add</Button>
       <Button Name="CancelButton" Click="CancelButton_Click">Cancel</Button>

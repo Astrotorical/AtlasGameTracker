@@ -12,6 +12,8 @@ namespace AtlasGameTrackerUI.ViewModels
         private ObservableCollection<ProcessInfo> _options = new ObservableCollection<ProcessInfo>();
         [ObservableProperty]
         private ProcessInfo? _selectedProcess;
+        [ObservableProperty]
+        private string _displayName = string.Empty;
 
         public AddRegisteredAppViewModel()
         {

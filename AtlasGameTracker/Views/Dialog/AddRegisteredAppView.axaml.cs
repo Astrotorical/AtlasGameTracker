@@ -18,6 +18,7 @@ public partial class AddRegisteredAppView : Window
         {
             if (viewModel.SelectedProcess != null)
             {
+                viewModel.SelectedProcess.DisplayName = viewModel.DisplayName;
                 Close(viewModel.SelectedProcess);
             }
         }
@@ -26,5 +27,16 @@ public partial class AddRegisteredAppView : Window
     private void CancelButton_Click(object? sender, RoutedEventArgs e)
     {
         Close(null);
+    }
+
+    private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (DataContext is AddRegisteredAppViewModel viewModel)
+        {
+            if (viewModel.SelectedProcess != null)
+            {
+                viewModel.DisplayName = viewModel.SelectedProcess.ProcessName;
+            }
+        }
     }
 }

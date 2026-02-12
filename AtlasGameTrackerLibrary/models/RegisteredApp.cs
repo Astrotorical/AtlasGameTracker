@@ -6,6 +6,7 @@
         public string ProcessName { get; set; } = string.Empty;
         public string? DisplayName { get; set; }
         public bool IsTracked { get; set; } = true;
+        // Properties that aren't stored in the database
         public List<Session> Sessions { get; set; } = new List<Session>();
         public double TotalPlaytime
         {

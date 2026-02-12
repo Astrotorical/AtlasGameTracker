@@ -66,6 +66,27 @@ namespace AtlasGameTrackerLibrary
             return count > 0;
         }
 
+        public static RegisteredApp? GetRegisteredAppById(int registeredAppId)
+        {
+            using var connection = new SqliteConnection(_connectionString);
+            connection.Open();
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT RegisteredAppId, ProcessName, DisplayName, IsTracked FROM RegisteredApps WHERE RegisteredAppId = $registeredAppId;";
+            command.Parameters.AddWithValue("$registeredAppId", registeredAppId);
+            using var reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                return new RegisteredApp
+                {
+                    RegisteredAppId = reader.GetInt32(0),
+                    ProcessName = reader.GetString(1),
+                    DisplayName = reader.IsDBNull(2) ? null : reader.GetString(2),
+                    IsTracked = reader.GetInt32(3) != 0
+                };
+            }
+            return null;
+        }
+
         public static void RegisterApp(string processName, string? displayName = null)
         {
             using var connection = new SqliteConnection(_connectionString);

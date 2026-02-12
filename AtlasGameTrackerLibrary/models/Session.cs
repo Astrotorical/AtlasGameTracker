@@ -7,7 +7,7 @@
         public DateTime PollTime { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-
+        // Properties that aren't stored in the database
         public double SessionDuration
         {
             get
