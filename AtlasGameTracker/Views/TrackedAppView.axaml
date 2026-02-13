@@ -32,8 +32,9 @@
                 <Button Grid.Column="0"
                         Command="{Binding AddRegisteredAppCommand}"
                         Width="32" Height="32"
-                        ToolTip.Tip="Add new registered application">
-                    <TextBlock Text="+" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center"/>
+                        ToolTip.Tip="Add new registered application"
+                        Foreground="#727272">
+                    <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/add.png" Width="24" Height="24"/>
                 </Button>
                 <TextBlock Grid.Column="1" Margin="0,0,20,0" Text="Registered Applications" FontWeight="SemiBold" VerticalAlignment="Center" />
             </Grid>
@@ -54,10 +55,15 @@
     <SplitView.Content>
         <StackPanel>
             <Button Command="{Binding TogglePanelCommand}" ToolTip.Tip="Hide panel">
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/3lines.png" Width="24" Height="24"/>
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/dehaze.png" Width="28" Height="28"/>
             </Button>
             <StackPanel Margin="20" IsVisible="{Binding HasSelectedApp}">
-				<TextBlock Text="{Binding SelectedApp.DisplayName}" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+				<StackPanel Orientation="Horizontal" Spacing="20">
+                    <TextBox Text="{Binding SelectedApp.DisplayName}" FontSize="24" FontWeight="Bold" Margin="-12,0,0,10" MaxWidth="500" TextAlignment="Center" BorderBrush="Transparent"/>
+                    <Button Command="{Binding EditRegisteredAppCommand}" Margin="0,-10,0,0" HorizontalAlignment="Right" Width="32" Height="32">
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/edit.png" Width="24" Height="24"/>
+                    </Button>
+                </StackPanel>
                 <TextBlock Text="Application Process Name:" FontSize="18" FontWeight="SemiBold"/>
                 <TextBlock Text="{Binding SelectedApp.ProcessName}" FontSize="16" Margin="0,0,0,10"/>
                 <TextBlock Text="Total Playtime:" FontSize="18" FontWeight="SemiBold"/>

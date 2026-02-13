@@ -2,6 +2,7 @@
 using AtlasGameTrackerLibrary.models;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -56,22 +57,6 @@ namespace AtlasGameTrackerUI.ViewModels
             }
         }
 
-        //public void OnDisplayNameLostFocus()
-        //{
-        //    if (SelectedApp != null)
-        //    {
-        //        if (!String.IsNullOrEmpty(SelectedApp.DisplayName))
-        //        {
-        //            DBUtil.UpdateAppDisplayName(SelectedApp.RegisteredAppId, SelectedApp.DisplayName);
-        //            LoadRegisteredApps();
-        //        }
-        //        else
-        //        {
-        //            SelectedApp.DisplayName = SelectedApp.ProcessName;
-        //        }
-        //    }
-        //}
-
         private void LoadRegisteredApps()
         {
             List<RegisteredApp> apps = DBUtil.GetAllRegisteredApps()
@@ -124,5 +109,26 @@ namespace AtlasGameTrackerUI.ViewModels
                 OnSelectedAppChanged();
             }
         }
+
+        [RelayCommand]
+        private void EditRegisteredApp()
+        {
+            if (SelectedApp != null)
+            {
+                if (!string.IsNullOrEmpty(SelectedApp.DisplayName))
+                {
+                    string processName = SelectedApp.ProcessName;
+                    DBUtil.UpdateAppDisplayName(SelectedApp.RegisteredAppId, SelectedApp.DisplayName);
+                    LoadRegisteredApps();
+                    SelectedApp = RegisteredApps.FirstOrDefault(a => a.ProcessName == processName);
+                    OnSelectedAppChanged();
+                }
+            }
+        }
+
+        //private void RefreshRegisteredApps()
+        //{
+        //    LoadRegisteredApps();
+        //}
     }
 }
