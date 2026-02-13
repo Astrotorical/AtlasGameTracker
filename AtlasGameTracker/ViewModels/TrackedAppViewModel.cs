@@ -126,9 +126,16 @@ namespace AtlasGameTrackerUI.ViewModels
             }
         }
 
-        //private void RefreshRegisteredApps()
-        //{
-        //    LoadRegisteredApps();
-        //}
+        [RelayCommand]
+        private void RefreshRegisteredApps()
+        {
+            string processName = SelectedApp?.ProcessName ?? string.Empty;
+            LoadRegisteredApps();
+            if (!string.IsNullOrEmpty(processName))
+            {
+                SelectedApp = RegisteredApps.FirstOrDefault(a => a.ProcessName == processName);
+                OnSelectedAppChanged();
+            }
+        }
     }
 }
