@@ -131,6 +131,21 @@ namespace AtlasGameTrackerLibrary
             command.ExecuteNonQuery();
         }
 
+        public static void DeleteRegisteredApp(int registeredAppId)
+        {
+            using var connection = new SqliteConnection(_connectionString);
+            connection.Open();
+            using var command = connection.CreateCommand();
+            command.CommandText = @"
+                DELETE FROM RegisteredApps
+                WHERE RegisteredAppId = $registeredAppId;
+                DELETE FROM Sessions
+                WHERE RegisteredAppId = $registeredAppId;
+            ";
+            command.Parameters.AddWithValue("$registeredAppId", registeredAppId);
+            command.ExecuteNonQuery();
+        }
+
         public static void UpdateAppDisplayName(int registeredAppId, string displayName)
         {
             using var connection = new SqliteConnection(_connectionString);
