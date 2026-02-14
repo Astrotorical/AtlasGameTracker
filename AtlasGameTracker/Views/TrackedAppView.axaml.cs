@@ -17,12 +17,4 @@ public partial class TrackedAppView : UserControl
             viewModel.OnSelectedAppChanged();
         }
     }
-
-    //private void DisplayNameLostFocus(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-    //{
-    //    if (DataContext is TrackedAppViewModel viewModel)
-    //    {
-    //        viewModel.OnDisplayNameLostFocus();
-    //    }
-    //}
 }
