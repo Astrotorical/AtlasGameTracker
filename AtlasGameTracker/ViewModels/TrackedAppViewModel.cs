@@ -2,7 +2,6 @@
 using AtlasGameTrackerLibrary.models;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -134,6 +133,24 @@ namespace AtlasGameTrackerUI.ViewModels
             if (!string.IsNullOrEmpty(processName))
             {
                 SelectedApp = RegisteredApps.FirstOrDefault(a => a.ProcessName == processName);
+                OnSelectedAppChanged();
+            }
+        }
+
+        [RelayCommand]
+        private async Task DeleteRegisteredApp()
+        {
+            var lifetime = Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+            var mainWindow = lifetime?.MainWindow;
+
+            var dialog = new ConfirmationView("Are you sure you want to delete this registered application and ALL the sessions assoicated with it?", null, "YES");
+            var confirm = await dialog.ShowDialog<bool>(mainWindow);
+
+            if (SelectedApp != null && confirm)
+            {
+                DBUtil.DeleteRegisteredApp(SelectedApp.RegisteredAppId);
+                LoadRegisteredApps();
+                SelectedApp = null;
                 OnSelectedAppChanged();
             }
         }

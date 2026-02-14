@@ -1,0 +1,17 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:AtlasGameTrackerUI"
+        x:Class="AtlasGameTrackerUI.ConfirmationView"
+        xmlns:vm="using:AtlasGameTrackerUI.ViewModels"
+        x:DataType="vm:ConfirmationViewModel"
+        Title="{Binding WindowText}"
+        Width="400" Height="150"
+        WindowStartupLocation="CenterOwner">
+        <StackPanel Margin="12" Spacing="8">
+          <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Margin="0,10,0,0"/>
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+            <Button Content="{Binding ConfirmText}" Click="OnConfirm"/>
+            <Button Content="{Binding CancelText}" Click="OnCancel" />
+          </StackPanel>
+    </StackPanel>
+</Window>

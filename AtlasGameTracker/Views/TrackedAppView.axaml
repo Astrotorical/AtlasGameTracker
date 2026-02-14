@@ -51,13 +51,16 @@
     <SplitView.Content>
         <StackPanel>
             <Button Grid.Column="0" Command="{Binding TogglePanelCommand}" ToolTip.Tip="Hide panel">
-               <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/dehaze.png" Width="28" Height="28"/>
+               <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/menu.png" Width="28" Height="28"/>
             </Button>
             <StackPanel Margin="20" IsVisible="{Binding HasSelectedApp}">
 				<StackPanel Orientation="Horizontal" Spacing="10">
                     <TextBox Text="{Binding SelectedApp.DisplayName}" FontSize="24" FontWeight="Bold" Margin="-12,0,0,10" MaxWidth="400" MinWidth="400" TextAlignment="Start" BorderBrush="Transparent"/>
                     <Button Command="{Binding EditRegisteredAppCommand}" Margin="0,-10,0,0" HorizontalAlignment="Right" Width="32" Height="32" ToolTip.Tip="Confirm display name edit">
                         <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/edit.png" Width="24" Height="24"/>
+                    </Button>
+                    <Button Command="{Binding DeleteRegisteredAppCommand}" Margin="0,-10,0,0" HorizontalAlignment="Right" Width="32" Height="32" ToolTip.Tip="Remove registered application">
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/delete.png" Width="24" Height="24"/>
                     </Button>
                 </StackPanel>
                 <TextBlock Text="Application Process Name:" FontSize="18" FontWeight="SemiBold"/>
