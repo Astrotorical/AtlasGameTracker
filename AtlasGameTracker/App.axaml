@@ -9,5 +9,8 @@
         <Style Selector="TextBlock">
             <Setter Property="FontSize" Value="18"/>
         </Style>
+        <Style Selector="Window">
+			<Setter Property="Icon" Value="avares://AtlasGameTrackerUI/Assets/atlas.png"/>
+        </Style>
     </Application.Styles>
 </Application>
