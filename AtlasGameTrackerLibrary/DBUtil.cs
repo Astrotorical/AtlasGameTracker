@@ -5,7 +5,7 @@ namespace AtlasGameTrackerLibrary
 {
     public static class DBUtil
     {
-        private static string _connectionString => $"Data Source={getDBPath()}";
+        private static string _connectionString => $"Data Source={getDBPath()};Foreign Keys=True";
 
         private static string getDBPath()
         {
@@ -44,7 +44,8 @@ namespace AtlasGameTrackerLibrary
                     RegisteredAppId INTEGER NOT NULL,
                     PollTime DATETIME NOT NULL,
                     StartTime DATETIME,
-                    EndTime DATETIME
+                    EndTime DATETIME,
+                    FOREIGN KEY (RegisteredAppId) REFERENCES RegisteredApps(RegisteredAppId) ON DELETE CASCADE
                 );
             ";
 
