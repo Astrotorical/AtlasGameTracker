@@ -16,10 +16,6 @@
                 <views:TrackedAppView />
             </TabItem>
         </TabControl>
-        <TextPresenter VerticalAlignment="Bottom" 
-                       HorizontalAlignment="Left"
-                       FontSize="14"
-                       Opacity="0.3">v0.0.1
-        </TextPresenter>
+        <TextPresenter VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="14" Opacity="0.3">v0.0.1</TextPresenter>
     </Grid>
 </Window>
