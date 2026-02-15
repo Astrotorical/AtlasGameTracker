@@ -15,6 +15,9 @@
             <TabItem Header="Applications">
                 <views:TrackedAppView />
             </TabItem>
+            <TabItem Header="Settings">
+                <views:SettingsView />
+            </TabItem>
         </TabControl>
         <TextPresenter VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="14" Opacity="0.3">v0.0.1</TextPresenter>
     </Grid>
