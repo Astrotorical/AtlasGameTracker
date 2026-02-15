@@ -24,8 +24,8 @@
             <Grid Margin="10" VerticalAlignment="Center" Grid.Row="0">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Top" HorizontalAlignment="Left">
-				        <Button Command="{Binding AddRegisteredAppCommand}" Width="32" Height="32" ToolTip.Tip="Add new registered application" Foreground="#727272">
-                            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/add.png" Width="24" Height="24"/>
+				        <Button Command="{Binding AddRegisteredAppCommand}" Width="32" Height="32" ToolTip.Tip="Add new registered application">
+                                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/add.png" Width="24" Height="24"/>
                         </Button>
                         <Button Command="{Binding RefreshRegisteredAppsCommand}" Width="32" Height="32"  ToolTip.Tip="Refresh registered applications">
 					        <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="avares://AtlasGameTrackerUI/Assets/refresh.png" Width="24" Height="24"/>
