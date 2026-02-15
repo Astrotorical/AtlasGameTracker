@@ -5,20 +5,29 @@
         xmlns:views="using:AtlasGameTrackerUI"
         xmlns:vm="using:AtlasGameTrackerUI.ViewModel"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:DataType="views:MainWindow"
         x:Class="AtlasGameTrackerUI.MainWindow"
         Title="AtlasGameTracker">
-    <Grid>
-        <TabControl Padding="0">
-            <TabItem Header="Overview" >
-                <views:OverviewView />
-            </TabItem>
-            <TabItem Header="Applications">
-                <views:TrackedAppView />
-            </TabItem>
-            <TabItem Header="Settings">
-                <views:SettingsView />
-            </TabItem>
-        </TabControl>
-        <TextPresenter VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="14" Opacity="0.3">v0.0.1</TextPresenter>
-    </Grid>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <LayoutTransformControl>
+            <LayoutTransformControl.LayoutTransform>
+				<ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"/>
+            </LayoutTransformControl.LayoutTransform>
+
+            <Grid>
+                <TabControl Padding="0">
+                    <TabItem Header="Overview">
+                        <views:OverviewView />
+                    </TabItem>
+                    <TabItem Header="Applications">
+                        <views:TrackedAppView />
+                    </TabItem>
+                    <TabItem Header="Settings">
+                        <views:SettingsView />
+                    </TabItem>
+                </TabControl>
+                <TextPresenter VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="14" Opacity="0.3">v0.0.1</TextPresenter>
+            </Grid>
+         </LayoutTransformControl>
+    </ScrollViewer>
 </Window>

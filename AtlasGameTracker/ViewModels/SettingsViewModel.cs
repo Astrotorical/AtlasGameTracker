@@ -1,5 +1,6 @@
 ﻿using AtlasGameTrackerUI.Persistence;
 using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
