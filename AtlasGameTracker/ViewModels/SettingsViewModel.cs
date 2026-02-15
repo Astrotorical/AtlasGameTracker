@@ -25,11 +25,11 @@ namespace AtlasGameTrackerUI.ViewModels
             else
             {
                 SelectedTheme = "Dark";
-                ApplyTheme();
+                ApplyTheme(false);
             }
         }
 
-        public void ApplyTheme()
+        public void ApplyTheme(bool hadExistingTheme)
         {
             if (Application.Current == null)
                 return;
@@ -46,11 +46,19 @@ namespace AtlasGameTrackerUI.ViewModels
                     Application.Current.RequestedThemeVariant = ThemeVariant.Dark;
                     break;
             }
-
-            AppSettings settings = new AppSettings
+            AppSettings? settings = null;
+            // Preventing two back-to-back calls of LoadSettings
+            if (hadExistingTheme)
             {
-                Theme = SelectedTheme
-            };
+                settings = Settings.LoadSettings();
+            }
+
+            if (settings == null) { 
+                settings = new AppSettings();
+            }
+
+            settings.Theme = SelectedTheme;
+
             Settings.SaveSettings(settings);
         }
     }

@@ -15,7 +15,7 @@ public partial class SettingsView : UserControl
     {
         if (DataContext is SettingsViewModel viewModel)
         {
-            viewModel.ApplyTheme();
+            viewModel.ApplyTheme(true);
         }
     }
 }
